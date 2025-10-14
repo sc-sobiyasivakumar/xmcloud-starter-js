@@ -80,3 +80,4 @@ A new starter SPA based on Angular has been introduced with JSS v22.3.0. The Ang
 ## AI-Assisted Development
 
 This repository includes Cursor AI guidance files (`.cursor/rules/`) to help maintain consistent code quality and follow Sitecore XM Cloud best practices across all starter applications. These rules automatically provide context and enforce patterns when using AI coding assistants like Cursor. See the [Contributing Guide](CONTRIBUTING.md#ai-assisted-development) for details on using AI assistance with this project.
+
