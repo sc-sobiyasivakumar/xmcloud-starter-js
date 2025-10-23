@@ -6,6 +6,7 @@ import type { ComponentProps } from '@/lib/component-props';
  */
 export type AccordionProps = ComponentProps &
   AccordionFields & {
+    /** Indicates whether the component is being edited in Experience Editor */
     isPageEditing?: boolean;
   };
 
