@@ -56,7 +56,7 @@ export function middleware(req: NextRequest, ev: NextFetchEvent) {
     skip: () => false,
   });
 
-  return defineMiddleware(multisite, redirects, personalize).exec(req, ev);
+  return defineMiddleware(multisite, redirects, personalizee).exec(req, ev);
 }
 
 export const config = {
