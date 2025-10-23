@@ -6,6 +6,9 @@ import type { ComponentProps } from '@/lib/component-props';
  */
 export type AccordionProps = ComponentProps &
   AccordionFields & {
+    /**
+ * Model used for Sitecore Component integration
+ */
     isPageEditing?: boolean;
   };
 
