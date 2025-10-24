@@ -3,7 +3,7 @@
  *
  * The key should be referenced in the rendering files,
  * and the value to should be the name of the dictionary item
- * in Sitecore.
+ * in Sitecore .
  */
 
 import { GlobalFooterDictionaryKeys } from '@/components/global-footer/global-footer.dictionary';
