@@ -2,7 +2,7 @@ name: PR Validation for DMZ Branch
 
 on:
   pull_request:
-    branches: [dmz]
+    branches: [dmz, dmz-testing]
 
 env:
   NODE_VERSION: "22.11.0"
@@ -192,7 +192,7 @@ jobs:
               cd "examples/$starter"
               
               # Run linting
-              if npm run lint 2>/dev/null; then
+              if npm run lint; then
                 echo "✅ Linting passed for $starter"
               else
                 echo "❌ Linting failed for $starter"
@@ -200,7 +200,7 @@ jobs:
               fi
               
               # Check formatting
-              if npm run format:check 2>/dev/null; then
+              if npm run format:check; then
                 echo "✅ Formatting check passed for $starter"
               else
                 echo "❌ Formatting check failed for $starter"
