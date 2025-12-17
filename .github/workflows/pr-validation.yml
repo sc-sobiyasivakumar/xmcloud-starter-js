@@ -2,7 +2,7 @@ name: PR Validation for DMZ Branch
 
 on:
   pull_request:
-    branches: [dmz]
+    branches: [dmz, dmz-testing]
 
 env:
   NODE_VERSION: "22.11.0"
@@ -129,14 +129,31 @@ jobs:
             fi
           fi
 
+          # Trim leading/trailing whitespace from CHANGED_STARTERS
+          CHANGED_STARTERS=$(echo "$CHANGED_STARTERS" | xargs)
+
           echo "Changed starters: $CHANGED_STARTERS"
-          echo "changed-starters=$CHANGED_STARTERS" >> $GITHUB_OUTPUT
+          
+          # Output the trimmed value, or empty string if no starters detected
+          if [ -z "$CHANGED_STARTERS" ]; then
+            echo "⚠️ No starter changes detected"
+            echo "changed-starters=" >> $GITHUB_OUTPUT
+          else
+            echo "changed-starters=$CHANGED_STARTERS" >> $GITHUB_OUTPUT
+          fi
 
       - name: Install dependencies for changed starters
         run: |
           echo "Installing dependencies for changed starters..."
 
-          for starter in ${{ steps.detect-changes.outputs.changed-starters }}; do
+          CHANGED_STARTERS="${{ steps.detect-changes.outputs.changed-starters }}"
+          
+          if [ -z "$CHANGED_STARTERS" ]; then
+            echo "⚠️ No starters to process, skipping dependency installation"
+            exit 0
+          fi
+
+          for starter in $CHANGED_STARTERS; do
             if [ -d "examples/$starter" ]; then
               echo "Installing dependencies for $starter..."
               cd "examples/$starter"
@@ -149,7 +166,14 @@ jobs:
         run: |
           echo "Generating Sitecore configuration files..."
 
-          for starter in ${{ steps.detect-changes.outputs.changed-starters }}; do
+          CHANGED_STARTERS="${{ steps.detect-changes.outputs.changed-starters }}"
+          
+          if [ -z "$CHANGED_STARTERS" ]; then
+            echo "⚠️ No starters to process, skipping Sitecore file generation"
+            exit 0
+          fi
+
+          for starter in $CHANGED_STARTERS; do
             if [ -d "examples/$starter" ]; then
               echo "Generating files for $starter..."
               cd "examples/$starter"
@@ -184,29 +208,39 @@ jobs:
 
       - name: Lint and format check
         run: |
+          set -e  # Exit immediately if any command fails
           echo "Running linting and formatting checks..."
 
-          for starter in ${{ steps.detect-changes.outputs.changed-starters }}; do
+          CHANGED_STARTERS="${{ steps.detect-changes.outputs.changed-starters }}"
+          
+          if [ -z "$CHANGED_STARTERS" ]; then
+            echo "⚠️ No starters to process, skipping lint and format checks"
+            exit 0
+          fi
+
+          for starter in $CHANGED_STARTERS; do
             if [ -d "examples/$starter" ]; then
               echo "Checking $starter..."
               cd "examples/$starter"
               
               # Run linting
-              if npm run lint 2>/dev/null; then
-                echo "✅ Linting passed for $starter"
-              else
+              echo "Running lint for $starter..."
+              if ! npm run lint; then
                 echo "❌ Linting failed for $starter"
+                echo "::error::Linting failed for $starter"
                 exit 1
               fi
+              echo "✅ Linting passed for $starter"
               
               # Check formatting
-              if npm run format:check 2>/dev/null; then
-                echo "✅ Formatting check passed for $starter"
-              else
+              echo "Running format check for $starter..."
+              if ! npm run format:check; then
                 echo "❌ Formatting check failed for $starter"
                 echo "Run 'npm run prettier' to fix formatting issues"
+                echo "::error::Formatting check failed for $starter"
                 exit 1
               fi
+              echo "✅ Formatting check passed for $starter"
               
               cd ../..
             fi
@@ -216,7 +250,14 @@ jobs:
         run: |
           echo "Running TypeScript type checking..."
 
-          for starter in ${{ steps.detect-changes.outputs.changed-starters }}; do
+          CHANGED_STARTERS="${{ steps.detect-changes.outputs.changed-starters }}"
+          
+          if [ -z "$CHANGED_STARTERS" ]; then
+            echo "⚠️ No starters to process, skipping type checking"
+            exit 0
+          fi
+
+          for starter in $CHANGED_STARTERS; do
             if [ -d "examples/$starter" ]; then
               echo "Type checking $starter..."
               cd "examples/$starter"
@@ -260,7 +301,14 @@ jobs:
           echo "  NEXT_PUBLIC_DEFAULT_SITE_NAME: ${NEXT_PUBLIC_DEFAULT_SITE_NAME}"
           echo "  SITECORE_EDITING_SECRET: ${SITECORE_EDITING_SECRET:+[SET]}"
 
-          for starter in ${{ steps.detect-changes.outputs.changed-starters }}; do
+          CHANGED_STARTERS="${{ steps.detect-changes.outputs.changed-starters }}"
+          
+          if [ -z "$CHANGED_STARTERS" ]; then
+            echo "⚠️ No starters to process, skipping build"
+            exit 0
+          fi
+
+          for starter in $CHANGED_STARTERS; do
             if [ -d "examples/$starter" ]; then
               echo "Building $starter..."
               cd "examples/$starter"
@@ -280,7 +328,14 @@ jobs:
         run: |
           echo "Running tests for changed starters..."
 
-          for starter in ${{ steps.detect-changes.outputs.changed-starters }}; do
+          CHANGED_STARTERS="${{ steps.detect-changes.outputs.changed-starters }}"
+          
+          if [ -z "$CHANGED_STARTERS" ]; then
+            echo "⚠️ No starters to process, skipping tests"
+            exit 0
+          fi
+
+          for starter in $CHANGED_STARTERS; do
             if [ -d "examples/$starter" ]; then
               echo "Testing $starter..."
               cd "examples/$starter"
@@ -371,3 +426,4 @@ jobs:
                 throw error;
               }
             }
+              
