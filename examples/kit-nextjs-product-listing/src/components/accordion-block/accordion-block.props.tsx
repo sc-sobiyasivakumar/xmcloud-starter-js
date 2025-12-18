@@ -32,3 +32,6 @@ export type AccordionItemProps = {
     jsonValue: RichTextField;
   };
 };
+
+// Intentional lint error for testing workflow - using 'any' type which is disallowed
+const testVariable: any = 'test';
