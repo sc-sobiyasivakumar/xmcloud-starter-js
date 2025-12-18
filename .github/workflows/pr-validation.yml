@@ -258,7 +258,8 @@ jobs:
               
               # Run linting
               echo "Running lint for $starter..."
-              if ! npx eslint ./src/**/*.ts ./src/**/*.tsx --max-warnings=0; then
+              # Use npm script to ensure proper glob expansion and config resolution
+              if ! npm run lint -- --max-warnings=0; then
                 echo "❌ Linting failed for $starter"
                 exit 1
               fi
