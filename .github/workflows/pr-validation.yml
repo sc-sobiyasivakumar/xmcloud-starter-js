@@ -258,11 +258,11 @@ jobs:
               
               # Run linting
               echo "Running lint for $starter..."
-              if ! npm run lint; then
+              if ! npx eslint ./src/**/*.ts ./src/**/*.tsx --max-warnings=0; then
                 echo "❌ Linting failed for $starter"
-                echo "::error::Linting failed for $starter"
                 exit 1
               fi
+
               echo "✅ Linting passed for $starter"
               
               # Check formatting (if script exists)
