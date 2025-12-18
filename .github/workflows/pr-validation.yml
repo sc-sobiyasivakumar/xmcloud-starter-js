@@ -97,33 +97,64 @@ jobs:
         id: detect-changes
         run: |
           echo "Detecting changed starter applications..."
+          echo "Current branch: $(git rev-parse --abbrev-ref HEAD)"
+          echo "Current commit: $(git rev-parse HEAD)"
+          
+          # Determine base branch (PR base or default to dmz)
+          BASE_BRANCH="${GITHUB_BASE_REF:-dmz}"
+          echo "Base branch: $BASE_BRANCH"
+          echo "Base commit: $(git rev-parse origin/$BASE_BRANCH 2>/dev/null || echo 'not found')"
 
-          # Get list of changed files
-          CHANGED_FILES=$(git diff --name-only origin/dmz...HEAD)
-          echo "Changed files: $CHANGED_FILES"
+          # Get list of changed files - try multiple methods for PR context
+          # Method 1: Compare with base branch
+          CHANGED_FILES=$(git diff --name-only origin/$BASE_BRANCH...HEAD 2>/dev/null || echo "")
+          
+          # Method 2: If that fails, try comparing with merge base
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "Trying alternative method to detect changes..."
+            MERGE_BASE=$(git merge-base origin/$BASE_BRANCH HEAD 2>/dev/null || echo "")
+            if [ -n "$MERGE_BASE" ]; then
+              CHANGED_FILES=$(git diff --name-only $MERGE_BASE...HEAD 2>/dev/null || echo "")
+            fi
+          fi
+          
+          # Method 3: If still empty, use all files in PR (fallback)
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "Using all changed files in current commit..."
+            CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || echo "")
+          fi
+
+          echo "Changed files detected:"
+          echo "$CHANGED_FILES" | while IFS= read -r line; do
+            echo "  - $line"
+          done
 
           # Detect which starters have changes
           CHANGED_STARTERS=""
 
           if echo "$CHANGED_FILES" | grep -q "^examples/kit-nextjs-skate-park/"; then
+            echo "  ✓ Detected changes in kit-nextjs-skate-park"
             CHANGED_STARTERS="$CHANGED_STARTERS kit-nextjs-skate-park"
           fi
 
           if echo "$CHANGED_FILES" | grep -q "^examples/kit-nextjs-article-starter/"; then
+            echo "  ✓ Detected changes in kit-nextjs-article-starter"
             CHANGED_STARTERS="$CHANGED_STARTERS kit-nextjs-article-starter"
           fi
 
           if echo "$CHANGED_FILES" | grep -q "^examples/kit-nextjs-location-finder/"; then
+            echo "  ✓ Detected changes in kit-nextjs-location-finder"
             CHANGED_STARTERS="$CHANGED_STARTERS kit-nextjs-location-finder"
           fi
 
           if echo "$CHANGED_FILES" | grep -q "^examples/kit-nextjs-product-listing/"; then
+            echo "  ✓ Detected changes in kit-nextjs-product-listing"
             CHANGED_STARTERS="$CHANGED_STARTERS kit-nextjs-product-listing"
           fi
 
           # If no specific starter changes detected, check for global changes
           if [ -z "$CHANGED_STARTERS" ]; then
-            if echo "$CHANGED_FILES" | grep -q "^xmcloud.build.json\|^\.github/\|^README.md\|^CONTRIBUTING.md"; then
+            if echo "$CHANGED_FILES" | grep -qE "^(xmcloud\.build\.json|\.github/|README\.md|CONTRIBUTING\.md)"; then
               echo "Global changes detected, validating all starters"
               CHANGED_STARTERS="kit-nextjs-skate-park kit-nextjs-article-starter kit-nextjs-location-finder kit-nextjs-product-listing"
             fi
@@ -132,13 +163,15 @@ jobs:
           # Trim leading/trailing whitespace from CHANGED_STARTERS
           CHANGED_STARTERS=$(echo "$CHANGED_STARTERS" | xargs)
 
-          echo "Changed starters: $CHANGED_STARTERS"
+          echo ""
+          echo "Final changed starters: '$CHANGED_STARTERS'"
           
           # Output the trimmed value, or empty string if no starters detected
           if [ -z "$CHANGED_STARTERS" ]; then
             echo "⚠️ No starter changes detected"
             echo "changed-starters=" >> $GITHUB_OUTPUT
           else
+            echo "✅ Will validate: $CHANGED_STARTERS"
             echo "changed-starters=$CHANGED_STARTERS" >> $GITHUB_OUTPUT
           fi
 
