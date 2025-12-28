@@ -258,9 +258,10 @@ jobs:
               
               # Run linting
               echo "Running lint for $starter..."
-              # Use npm script to ensure proper glob expansion and config resolution
-              # Add --rule flag to enforce no-explicit-any rule (matches root config)
-              if ! npm run lint -- --max-warnings=0 --rule '@typescript-eslint/no-explicit-any: error'; then
+              # Run eslint directly with rule override to enforce no-explicit-any
+              # This ensures we catch 'any' type usage without modifying the starter's config file
+              # The --rule flag requires JSON format and must be passed directly to eslint, not through npm
+              if ! npx eslint --rule '{"@typescript-eslint/no-explicit-any":"error"}' --max-warnings=0 ./src/**/*.tsx ./src/**/*.ts; then
                 echo "❌ Linting failed for $starter"
                 exit 1
               fi
