@@ -187,7 +187,14 @@ jobs:
           set -e  # Exit immediately if any command fails
           echo "Running linting and formatting checks..."
 
-          for starter in ${{ steps.detect-changes.outputs.changed-starters }}; do
+          # Get changed starters, or default to all starters if empty
+          CHANGED_STARTERS="${{ steps.detect-changes.outputs.changed-starters }}"
+          if [ -z "$CHANGED_STARTERS" ]; then
+            echo "⚠️ No specific starters detected, validating all starters as fallback"
+            CHANGED_STARTERS="kit-nextjs-skate-park kit-nextjs-article-starter kit-nextjs-location-finder kit-nextjs-product-listing"
+          fi
+
+          for starter in $CHANGED_STARTERS; do
             if [ -d "examples/$starter" ]; then
               echo "Checking $starter..."
               cd "examples/$starter"
