@@ -182,27 +182,27 @@ jobs:
             fi
           done
 
-          - name: Lint and format check
-          run: |
-            set -euo pipefail
-        
-            echo "Running linting and formatting checks..."
-            echo "Changed starters: '${{ steps.detect-changes.outputs.changed-starters }}'"
-        
-            for starter in ${{ steps.detect-changes.outputs.changed-starters }}; do
-              if [ -d "examples/$starter" ]; then
-                echo "Checking $starter..."
-                cd "examples/$starter"
-        
-                echo "Running lint..."
-                npm run lint
-        
-                echo "Running format check..."
-                npm run format:check
-        
-                cd ../..
-              fi
-            done        
+      - name: Lint and format check
+        run: |
+          set -euo pipefail
+      
+          echo "Running linting and formatting checks..."
+          echo "Changed starters: '${{ steps.detect-changes.outputs.changed-starters }}'"
+      
+          for starter in ${{ steps.detect-changes.outputs.changed-starters }}; do
+            if [ -d "examples/$starter" ]; then
+              echo "Checking $starter..."
+              cd "examples/$starter"
+      
+              echo "Running lint..."
+              npm run lint
+      
+              echo "Running format check..."
+              npm run format:check
+      
+              cd ../..
+            fi
+          done        
 
       - name: Type checking
         run: |
