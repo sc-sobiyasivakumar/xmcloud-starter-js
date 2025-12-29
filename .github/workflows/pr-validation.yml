@@ -96,41 +96,50 @@ jobs:
       - name: Detect changed starters
         id: detect-changes
         run: |
+          set -euo pipefail
+
           echo "Detecting changed starter applications..."
 
-          # Get list of changed files
-          CHANGED_FILES=$(git diff --name-only origin/dmz...HEAD)
-          echo "Changed files: $CHANGED_FILES"
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
 
-          # Detect which starters have changes
+          echo "Base SHA: $BASE_SHA"
+          echo "Head SHA: $HEAD_SHA"
+
+          CHANGED_FILES=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA")
+
+          echo "Changed files:"
+          echo "$CHANGED_FILES"
+
           CHANGED_STARTERS=""
 
-          if echo "$CHANGED_FILES" | grep -q "^examples/kit-nextjs-skate-park/"; then
-            CHANGED_STARTERS="$CHANGED_STARTERS kit-nextjs-skate-park"
-          fi
+          for starter in \
+            kit-nextjs-skate-park \
+            kit-nextjs-article-starter \
+            kit-nextjs-location-finder \
+            kit-nextjs-product-listing
+          do
+            if echo "$CHANGED_FILES" | grep -q "^examples/$starter/"; then
+              CHANGED_STARTERS="$CHANGED_STARTERS $starter"
+            fi
+          done
 
-          if echo "$CHANGED_FILES" | grep -q "^examples/kit-nextjs-article-starter/"; then
-            CHANGED_STARTERS="$CHANGED_STARTERS kit-nextjs-article-starter"
-          fi
-
-          if echo "$CHANGED_FILES" | grep -q "^examples/kit-nextjs-location-finder/"; then
-            CHANGED_STARTERS="$CHANGED_STARTERS kit-nextjs-location-finder"
-          fi
-
-          if echo "$CHANGED_FILES" | grep -q "^examples/kit-nextjs-product-listing/"; then
-            CHANGED_STARTERS="$CHANGED_STARTERS kit-nextjs-product-listing"
-          fi
-
-          # If no specific starter changes detected, check for global changes
           if [ -z "$CHANGED_STARTERS" ]; then
-            if echo "$CHANGED_FILES" | grep -q "^xmcloud.build.json\|^\.github/\|^README.md\|^CONTRIBUTING.md"; then
+            if echo "$CHANGED_FILES" | grep -Eq '^(xmcloud\.build\.json|\.github/|README\.md|CONTRIBUTING\.md)'; then
               echo "Global changes detected, validating all starters"
               CHANGED_STARTERS="kit-nextjs-skate-park kit-nextjs-article-starter kit-nextjs-location-finder kit-nextjs-product-listing"
             fi
           fi
 
+          CHANGED_STARTERS=$(echo "$CHANGED_STARTERS" | xargs)
+
+          if [ -z "$CHANGED_STARTERS" ]; then
+            echo "::error::No changed starters detected"
+            exit 1
+          fi
+
           echo "Changed starters: $CHANGED_STARTERS"
-          echo "changed-starters=$CHANGED_STARTERS" >> $GITHUB_OUTPUT
+          echo "changed-starters=$CHANGED_STARTERS" >> "$GITHUB_OUTPUT"
 
       - name: Install dependencies for changed starters
         run: |
