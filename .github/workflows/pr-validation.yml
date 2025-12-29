@@ -182,69 +182,27 @@ jobs:
             fi
           done
 
-      - name: Lint and format check
-        run: |
-          set -e  # Exit immediately if any command fails
-          echo "Running linting and formatting checks..."
-
-          # Get changed starters, or default to all starters if empty
-          CHANGED_STARTERS="${{ steps.detect-changes.outputs.changed-starters }}"
-          if [ -z "$CHANGED_STARTERS" ]; then
-            echo "⚠️ No specific starters detected, validating all starters as fallback"
-            CHANGED_STARTERS="kit-nextjs-skate-park kit-nextjs-article-starter kit-nextjs-location-finder kit-nextjs-product-listing"
-          fi
-
-          for starter in $CHANGED_STARTERS; do
-            if [ -d "examples/$starter" ]; then
-              echo "Checking $starter..."
-              cd "examples/$starter"
-              
-              # Check if lint script exists in package.json
-              if ! grep -q '"lint"' package.json 2>/dev/null; then
-                echo "⏭️ Skipping lint for $starter (no lint script found)"
+          - name: Lint and format check
+          run: |
+            set -euo pipefail
+        
+            echo "Running linting and formatting checks..."
+            echo "Changed starters: '${{ steps.detect-changes.outputs.changed-starters }}'"
+        
+            for starter in ${{ steps.detect-changes.outputs.changed-starters }}; do
+              if [ -d "examples/$starter" ]; then
+                echo "Checking $starter..."
+                cd "examples/$starter"
+        
+                echo "Running lint..."
+                npm run lint
+        
+                echo "Running format check..."
+                npm run format:check
+        
                 cd ../..
-                continue
               fi
-              
-              # Ensure dependencies are installed
-              if [ ! -d "node_modules" ] || [ ! -f "node_modules/.bin/eslint" ]; then
-                echo "📦 Installing dependencies for $starter (required for linting)..."
-                npm install
-              fi
-              
-              # Check if eslint is available
-              if [ ! -f "node_modules/.bin/eslint" ] && ! command -v eslint >/dev/null 2>&1; then
-                echo "⏭️ Skipping lint for $starter (eslint not available)"
-                cd ../..
-                continue
-              fi
-              
-              # Run linting
-              echo "Running lint for $starter..."
-              if ! npm run lint; then
-                echo "❌ Linting failed for $starter"
-                echo "::error::Linting failed for $starter"
-                exit 1
-              fi
-              echo "✅ Linting passed for $starter"
-              
-              # Check formatting (only if format:check script exists)
-              if grep -q '"format:check"' package.json 2>/dev/null; then
-                echo "Running format check for $starter..."
-                if ! npm run format:check; then
-                  echo "❌ Formatting check failed for $starter"
-                  echo "Run 'npm run prettier' to fix formatting issues"
-                  echo "::error::Formatting check failed for $starter"
-                  exit 1
-                fi
-                echo "✅ Formatting check passed for $starter"
-              else
-                echo "⏭️ Skipping format check for $starter (no format:check script found)"
-              fi
-              
-              cd ../..
-            fi
-          done
+            done        
 
       - name: Type checking
         run: |
