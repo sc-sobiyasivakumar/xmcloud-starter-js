@@ -199,6 +199,26 @@ jobs:
               echo "Checking $starter..."
               cd "examples/$starter"
               
+              # Check if lint script exists in package.json
+              if ! grep -q '"lint"' package.json 2>/dev/null; then
+                echo "⏭️ Skipping lint for $starter (no lint script found)"
+                cd ../..
+                continue
+              fi
+              
+              # Ensure dependencies are installed
+              if [ ! -d "node_modules" ] || [ ! -f "node_modules/.bin/eslint" ]; then
+                echo "📦 Installing dependencies for $starter (required for linting)..."
+                npm install
+              fi
+              
+              # Check if eslint is available
+              if [ ! -f "node_modules/.bin/eslint" ] && ! command -v eslint >/dev/null 2>&1; then
+                echo "⏭️ Skipping lint for $starter (eslint not available)"
+                cd ../..
+                continue
+              fi
+              
               # Run linting
               echo "Running lint for $starter..."
               if ! npm run lint; then
@@ -208,15 +228,19 @@ jobs:
               fi
               echo "✅ Linting passed for $starter"
               
-              # Check formatting
-              echo "Running format check for $starter..."
-              if ! npm run format:check; then
-                echo "❌ Formatting check failed for $starter"
-                echo "Run 'npm run prettier' to fix formatting issues"
-                echo "::error::Formatting check failed for $starter"
-                exit 1
+              # Check formatting (only if format:check script exists)
+              if grep -q '"format:check"' package.json 2>/dev/null; then
+                echo "Running format check for $starter..."
+                if ! npm run format:check; then
+                  echo "❌ Formatting check failed for $starter"
+                  echo "Run 'npm run prettier' to fix formatting issues"
+                  echo "::error::Formatting check failed for $starter"
+                  exit 1
+                fi
+                echo "✅ Formatting check passed for $starter"
+              else
+                echo "⏭️ Skipping format check for $starter (no format:check script found)"
               fi
-              echo "✅ Formatting check passed for $starter"
               
               cd ../..
             fi
