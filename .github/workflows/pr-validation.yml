@@ -2,7 +2,7 @@ name: PR Validation for DMZ Branch
 
 on:
   pull_request:
-    branches: [dmz]
+    branches: [dmz, dmz-testing]
 
 env:
   NODE_VERSION: "22.11.0"
