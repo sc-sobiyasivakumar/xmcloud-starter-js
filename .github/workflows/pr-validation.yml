@@ -98,9 +98,17 @@ jobs:
         run: |
           echo "Detecting changed starter applications..."
 
-          # Get list of changed files
-          CHANGED_FILES=$(git diff --name-only origin/dmz...HEAD)
-          echo "Changed files: $CHANGED_FILES"
+          # For pull_request events, use PR base and head SHAs (not the merge commit)
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+
+          echo "Base SHA: $BASE_SHA"
+          echo "Head SHA: $HEAD_SHA"
+
+          # Get list of changed files between PR base and PR head
+          CHANGED_FILES=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA")
+          echo "Changed files:"
+          echo "$CHANGED_FILES"
 
           # Detect which starters have changes
           CHANGED_STARTERS=""
@@ -184,28 +192,34 @@ jobs:
 
       - name: Lint and format check
         run: |
+          set -euo pipefail
           echo "Running linting and formatting checks..."
 
           for starter in ${{ steps.detect-changes.outputs.changed-starters }}; do
             if [ -d "examples/$starter" ]; then
-              echo "Checking $starter..."
+              echo "=================================="
+              echo "Checking examples/$starter"
+              echo "=================================="
               cd "examples/$starter"
               
               # Run linting
-              if npm run lint 2>/dev/null; then
-                echo "✅ Linting passed for $starter"
-              else
-                echo "❌ Linting failed for $starter"
+              echo "Running lint..."
+              if ! npm run lint; then
+                echo "::error::Linting failed for $starter"
                 exit 1
               fi
+              echo "✅ Linting passed for $starter"
               
-              # Check formatting
-              if npm run format:check 2>/dev/null; then
+              # Check formatting (only if format:check script exists)
+              if grep -q '"format:check"' package.json 2>/dev/null; then
+                echo "Running format check..."
+                if ! npm run format:check; then
+                  echo "::error::Formatting check failed for $starter"
+                  exit 1
+                fi
                 echo "✅ Formatting check passed for $starter"
               else
-                echo "❌ Formatting check failed for $starter"
-                echo "Run 'npm run prettier' to fix formatting issues"
-                exit 1
+                echo "⏭️ Skipping format check (no format:check script found)"
               fi
               
               cd ../..
