@@ -17,12 +17,11 @@ jobs:
       issues: write
 
     steps:
-      - name: Checkout PR
+      - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
-          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Fetch all branches
         run: |
