@@ -211,7 +211,7 @@ jobs:
               fi
               echo "✅ Linting passed for $starter"
               echo "Lint glob expansion:"
-              echo "ls src/**/*.ts src/**/*.tsx || echo "NO FILES MATCHED""
+              ls src/**/*.ts src/**/*.tsx || echo "NO FILES MATCHED"
 
               
               # Check formatting
