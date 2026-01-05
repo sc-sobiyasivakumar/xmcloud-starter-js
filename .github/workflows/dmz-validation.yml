@@ -114,6 +114,9 @@ jobs:
                 exit 1
               fi
               echo "✅ Linting passed for $starter"
+              echo "Lint glob expansion:"
+              echo "ls src/**/*.ts src/**/*.tsx || echo "NO FILES MATCHED""
+
               
               # Check formatting
               echo "Running format check for $starter..."
