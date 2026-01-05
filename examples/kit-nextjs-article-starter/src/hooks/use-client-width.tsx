@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, type RefObject } from 'react';
+import { useEffect, useState, useMemo, type RefObject } from 'react';
 
 type WidthTransformFn = (width: number) => number;
 
