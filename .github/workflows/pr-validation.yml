@@ -193,7 +193,7 @@ jobs:
 
       - name: Lint and format check
         run: |
-          set -euo pipefail
+          set -e  # Exit immediately if any command fails
           echo "Running linting and formatting checks..."
 
           for starter in ${{ steps.detect-changes.outputs.changed-starters }}; do
@@ -204,8 +204,9 @@ jobs:
               cd "examples/$starter"
               
               # Run linting
-              echo "Running lint..."
+              echo "Running lint for $starter..."
               if ! npm run lint; then
+                echo "❌ Linting failed for $starter"
                 echo "::error::Linting failed for $starter"
                 exit 1
               fi
@@ -213,8 +214,10 @@ jobs:
               
               # Check formatting (only if format:check script exists)
               if grep -q '"format:check"' package.json 2>/dev/null; then
-                echo "Running format check..."
+                echo "Running format check for $starter..."
                 if ! npm run format:check; then
+                  echo "❌ Formatting check failed for $starter"
+                  echo "Run 'npm run prettier' to fix formatting issues"
                   echo "::error::Formatting check failed for $starter"
                   exit 1
                 fi
