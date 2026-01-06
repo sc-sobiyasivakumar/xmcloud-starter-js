@@ -29,6 +29,7 @@ export function useClientWidth<T extends HTMLElement>(
       }
     };
 
+    const x: any = 123;
     // Set initial width
     updateWidth();
 
