@@ -204,10 +204,23 @@ jobs:
               # Run linting
               echo "Running lint for $starter..."
               echo "Checking for TypeScript files..."
-              find src -name "*.ts" -o -name "*.tsx" | head -5 || echo "No TS files found"
-              echo "Running ESLint..."
-              # Capture both stdout and stderr to see what ESLint is doing
-              if ! npm run lint 2>&1; then
+              find src -name "*.ts" -o -name "*.tsx" 2>/dev/null | wc -l || echo "0"
+              echo "Checking if use-client-width.tsx exists..."
+              if [ -f "src/hooks/use-client-width.tsx" ]; then
+                echo "✅ File exists: src/hooks/use-client-width.tsx"
+                echo "File contents (first 10 lines):"
+                head -10 src/hooks/use-client-width.tsx
+              else
+                echo "❌ File NOT found: src/hooks/use-client-width.tsx"
+              fi
+              echo "Running ESLint with verbose output..."
+              # Test ESLint on the specific file first to verify it works
+              if [ -f "src/hooks/use-client-width.tsx" ]; then
+                echo "Testing ESLint directly on use-client-width.tsx..."
+                npx eslint --config ./eslint.config.mjs src/hooks/use-client-width.tsx --max-warnings 0 && echo "⚠️ ESLint passed on this file (unexpected!)" || echo "✅ ESLint correctly found errors in this file"
+              fi
+              # Run ESLint on all files
+              if ! npm run lint; then
                 echo "❌ Linting failed for $starter"
                 echo "::error::Linting failed for $starter"
                 exit 1
