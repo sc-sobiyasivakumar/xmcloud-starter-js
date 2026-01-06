@@ -203,14 +203,16 @@ jobs:
               
               # Run linting
               echo "Running lint for $starter..."
-              if ! npm run lint; then
+              echo "Checking for TypeScript files..."
+              find src -name "*.ts" -o -name "*.tsx" | head -5 || echo "No TS files found"
+              echo "Running ESLint..."
+              # Capture both stdout and stderr to see what ESLint is doing
+              if ! npm run lint 2>&1; then
                 echo "❌ Linting failed for $starter"
                 echo "::error::Linting failed for $starter"
                 exit 1
               fi
               echo "✅ Linting passed for $starter"
-              echo "Lint glob expansion:"
-              ls src/**/*.ts src/**/*.tsx || echo "NO FILES MATCHED"
               
               # Check formatting
               echo "Running format check for $starter..."
