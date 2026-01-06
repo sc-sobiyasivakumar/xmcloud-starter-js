@@ -1,8 +1,11 @@
 'use client';
 
-import { useEffect, useState, type RefObject } from 'react';
+import { useEffect, useState, useMemo, type RefObject } from 'react';
 
 type WidthTransformFn = (width: number) => number;
+
+const testLintError: any = 'this should fail linting';
+
 
 /**
  * Hook that returns the client width of an element using a ref.
