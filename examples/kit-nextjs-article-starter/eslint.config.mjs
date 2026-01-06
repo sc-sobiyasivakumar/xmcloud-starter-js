@@ -1,36 +1,22 @@
-import tseslint from "@typescript-eslint/eslint-plugin";
-import tsParser from "@typescript-eslint/parser";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import { FlatCompat } from "@eslint/eslintrc";
 
-export default [
-  {
-    files: ["**/*.ts", "**/*.tsx"],
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-    languageOptions: {
-      parser: tsParser,
-      parserOptions: {
-        sourceType: "module",
-        project: "./tsconfig.json",
-      },
-    },
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+});
 
-    plugins: {
-      "@typescript-eslint": tseslint,
-    },
-
+const eslintConfig = [
+  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  { 
     rules: {
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        {
-          argsIgnorePattern: "^_",
-          varsIgnorePattern: "^_",
-        },
-      ],
-
-      "@typescript-eslint/no-explicit-any": "error",
+      // Don't force alt for <Image/> (sourced from Sitecore media)
+      "jsx-a11y/alt-text": "off",
+      "@typescript-eslint/no-unused-vars": "error",
     },
-  },
-
-  {
     ignores: [
       "node_modules/**",
       ".next/**",
@@ -40,3 +26,5 @@ export default [
     ],
   },
 ];
+
+export default eslintConfig;
