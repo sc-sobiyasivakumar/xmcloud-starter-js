@@ -213,50 +213,7 @@ jobs:
               
               # Run linting
               echo "Running lint for $starter..."
-              echo "Git information:"
-              echo "Current commit: $(git rev-parse HEAD)"
-              echo "Current branch: $(git rev-parse --abbrev-ref HEAD)"
-              echo "Checking for TypeScript files..."
-              find src -name "*.ts" -o -name "*.tsx" 2>/dev/null | wc -l || echo "0"
-              echo "Checking if use-client-width.tsx exists..."
-              if [ -f "src/hooks/use-client-width.tsx" ]; then
-                echo "✅ File exists: src/hooks/use-client-width.tsx"
-                echo "File SHA: $(git hash-object src/hooks/use-client-width.tsx)"
-                echo "File contents (first 10 lines):"
-                head -10 src/hooks/use-client-width.tsx
-              else
-                echo "❌ File NOT found: src/hooks/use-client-width.tsx"
-              fi
-              echo "Running ESLint with verbose output..."
-              # Check the actual file content to see if it has errors
-              if [ -f "src/hooks/use-client-width.tsx" ]; then
-              echo "Checking file content for known errors..."
-              echo "Full file content:"
-              cat "src/hooks/use-client-width.tsx"
-              echo "--- End of file ---"
-              if grep -q "useMemo" "src/hooks/use-client-width.tsx"; then
-                echo "✅ File contains 'useMemo' (should trigger unused import error)"
-              else
-                echo "⚠️ File does NOT contain 'useMemo' (no unused import error expected)"
-              fi
-              if grep -q "testLintError.*any" "src/hooks/use-client-width.tsx"; then
-                echo "✅ File contains 'testLintError: any' (should trigger errors)"
-              else
-                echo "⚠️ File does NOT contain 'testLintError: any' (no errors expected)"
-              fi
-              echo "Testing ESLint directly on use-client-width.tsx..."
-              npx eslint --config ./eslint.config.mjs src/hooks/use-client-width.tsx --max-warnings 0 2>&1 || ESLINT_FILE_EXIT=$?
-              if [ "${ESLINT_FILE_EXIT:-0}" -ne 0 ]; then
-                echo "✅ ESLint correctly found errors in this file"
-                exit 1
-              else
-                echo "⚠️ ESLint passed on this file (unexpected if errors exist!)"
-              fi
-              fi
-              # Run ESLint on all files with verbose output
-              echo "Running full ESLint check..."
-              npm run lint 2>&1 | head -30 || LINT_EXIT=$?
-              if [ "${LINT_EXIT:-0}" -ne 0 ]; then
+              if ! npm run lint; then
                 echo "❌ Linting failed for $starter"
                 echo "::error::Linting failed for $starter"
                 exit 1
