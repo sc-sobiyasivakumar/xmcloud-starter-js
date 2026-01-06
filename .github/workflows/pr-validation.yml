@@ -89,6 +89,15 @@ jobs:
             exit 1
           fi
 
+      - name: Checkout PR branch for validation
+        run: |
+          # Ensure we're on the PR branch, not the test-merge branch
+          PR_HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+          echo "Checking out PR head commit: $PR_HEAD_SHA"
+          git checkout -f "$PR_HEAD_SHA" || git checkout -f "${{ github.event.pull_request.head.ref }}"
+          echo "Current commit after checkout: $(git rev-parse HEAD)"
+          echo "Current branch: $(git rev-parse --abbrev-ref HEAD)"
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
