@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo, type RefObject } from 'react';
 
 type WidthTransformFn = (width: number) => number;
 
-const testLintError: any = 'this should fail linting';
+const testLintError: any = 'this should fail linting  ';
 
 
 /**
