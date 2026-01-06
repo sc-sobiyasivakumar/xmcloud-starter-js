@@ -191,40 +191,81 @@ jobs:
           done
 
       - name: Lint and format check
+        shell: bash
+        env:
+          CI: true
         run: |
-          set -e  # Exit immediately if any command fails
+          set -Eeuo pipefail  # strict: fail on errors, undefined vars, and failed pipes
+          IFS=$'\n\t'
+
           echo "Running linting and formatting checks..."
+          # Normalize the changed-starters output into a bash array
+          CHANGED_STARTERS_RAW='${{ steps.detect-changes.outputs.changed-starters }}'
+          echo "Raw changed starters: ${CHANGED_STARTERS_RAW}"
 
-          for starter in ${{ steps.detect-changes.outputs.changed-starters }}; do
-            if [ -d "examples/$starter" ]; then
+          # Handle different formats: JSON array, comma-separated, or space-separated
+          starters=()
+          if [[ "${CHANGED_STARTERS_RAW}" =~ ^\[(.*)\]$ ]]; then
+            # JSON-like array -> strip brackets/quotes and split on comma
+            cleaned="${CHANGED_STARTERS_RAW#[}"
+            cleaned="${cleaned%]}"
+            cleaned="${cleaned//\"/}"
+            IFS=',' read -r -a starters <<< "${cleaned}"
+          elif [[ "${CHANGED_STARTERS_RAW}" == *","* ]]; then
+            IFS=',' read -r -a starters <<< "${CHANGED_STARTERS_RAW}"
+          else
+            # space/newline separated
+            read -r -a starters <<< "${CHANGED_STARTERS_RAW}"
+          fi
+
+          if [[ ${#starters[@]} -eq 0 ]]; then
+            echo "No changed starters detected. Skipping lint/format step."
+            exit 0
+          fi
+
+          for starter in "${starters[@]}"; do
+            starter="${starter//[[:space:]]/}"  # trim whitespace
+            [[ -z "${starter}" ]] && continue
+
+            if [[ -d "examples/${starter}" ]]; then
               echo "=================================="
-              echo "Checking examples/$starter"
+              echo "Checking examples/${starter}"
               echo "=================================="
-              cd "examples/$starter"
-              
-              # Run linting
-              echo "Running lint for $starter..."
-              if ! npm run lint; then
-                echo "❌ Linting failed for $starter"
-                echo "::error::Linting failed for $starter"
+              cd "examples/${starter}"
+
+              echo "Running lint for ${starter}..."
+              # Fail on warnings too
+              if ! npm run lint -- --max-warnings=0; then
+                echo "❌ Linting failed for ${starter}"
+                echo "::error::Linting failed for ${starter}"
                 exit 1
               fi
-              echo "✅ Linting passed for $starter"
-              echo "Lint glob expansion:"
-              ls src/**/*.ts src/**/*.tsx || echo "NO FILES MATCHED"
+              echo "✅ Linting passed for ${starter}"
 
-              
-              # Check formatting
-              echo "Running format check for $starter..."
+              echo "Lint glob expansion (debug):"
+              # Use 'shopt -s nullglob' to avoid literal patterns when no files
+              shopt -s nullglob
+              files=(src/**/*.ts src/**/*.tsx)
+              if ((${#files[@]})); then
+                printf '%s\n' "${files[@]}"
+              else
+                echo "NO FILES MATCHED"
+              fi
+              shopt -u nullglob
+
+              echo "Running format check for ${starter}..."
+              # Ensure format script returns non-zero on differences (e.g., prettier --check)
               if ! npm run format:check; then
-                echo "❌ Formatting check failed for $starter"
+                echo "❌ Formatting check failed for ${starter}"
                 echo "Run 'npm run prettier' to fix formatting issues"
-                echo "::error::Formatting check failed for $starter"
+                echo "::error::Formatting check failed for ${starter}"
                 exit 1
               fi
-              echo "✅ Formatting check passed for $starter"
-              
-              cd ../..
+              echo "✅ Formatting check passed for ${starter}"
+
+              cd - >/dev/null
+            else
+              echo "Skipping: examples/${starter} does not exist"
             fi
           done
 
