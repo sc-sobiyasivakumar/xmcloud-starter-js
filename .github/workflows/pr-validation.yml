@@ -22,6 +22,7 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Fetch all branches
         run: |
@@ -203,11 +204,15 @@ jobs:
               
               # Run linting
               echo "Running lint for $starter..."
+              echo "Git information:"
+              echo "Current commit: $(git rev-parse HEAD)"
+              echo "Current branch: $(git rev-parse --abbrev-ref HEAD)"
               echo "Checking for TypeScript files..."
               find src -name "*.ts" -o -name "*.tsx" 2>/dev/null | wc -l || echo "0"
               echo "Checking if use-client-width.tsx exists..."
               if [ -f "src/hooks/use-client-width.tsx" ]; then
                 echo "✅ File exists: src/hooks/use-client-width.tsx"
+                echo "File SHA: $(git hash-object src/hooks/use-client-width.tsx)"
                 echo "File contents (first 10 lines):"
                 head -10 src/hooks/use-client-width.tsx
               else
