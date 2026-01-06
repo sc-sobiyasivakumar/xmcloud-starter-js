@@ -1,5 +1,6 @@
 import type { Field, LinkField, RichTextField } from '@sitecore-content-sdk/nextjs';
 import type { ComponentProps } from '@/lib/component-props';
+import type React from 'react';
 
 /**
  * Model used for Sitecore Component integration
