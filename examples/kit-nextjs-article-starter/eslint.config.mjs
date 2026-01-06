@@ -12,6 +12,7 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   { 
+    files: ["**/*.ts", "**/*.tsx"],
     rules: {
       // Don't force alt for <Image/> (sourced from Sitecore media)
       "jsx-a11y/alt-text": "off",
