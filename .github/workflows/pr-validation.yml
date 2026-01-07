@@ -247,12 +247,18 @@ jobs:
               echo "Type checking $starter..."
               cd "examples/$starter"
               
-              # Sitecore files already generated in previous step
-              if npm run type-check 2>/dev/null; then
-                echo "✅ Type checking passed for $starter"
+              # Check if type-check script exists
+              if grep -q '"type-check"' package.json 2>/dev/null; then
+                # Sitecore files already generated in previous step
+                if npm run type-check; then
+                  echo "✅ Type checking passed for $starter"
+                else
+                  echo "❌ Type checking failed for $starter"
+                  echo "::error::Type checking failed for $starter"
+                  exit 1
+                fi
               else
-                echo "❌ Type checking failed for $starter"
-                exit 1
+                echo "⏭️ Skipping type check (no type-check script found in package.json)"
               fi
               
               cd ../..
