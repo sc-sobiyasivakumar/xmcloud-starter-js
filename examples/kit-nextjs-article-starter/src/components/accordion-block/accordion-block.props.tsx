@@ -5,30 +5,30 @@ import type { ComponentProps } from '@/lib/component-props';
  * Model used for Sitecore Component integration
  */
 export type AccordionProps = ComponentProps &
-  AccordionFields & {
+  AccordionFields &{
     isPageEditing?: boolean;
   };
 
 export interface AccordionFields {
-  fields?: {
-    data?: {
-      datasource?: {
-        heading?: { jsonValue: Field<string> };
-        description?: { jsonValue: Field<string> };
-        link?: { jsonValue: LinkField };
-        children?: {
-          results?: AccordionItemProps[];
+  fields?:{
+    data?:{
+      datasource?:{
+        heading?:{jsonValue:Field<string>};
+        description?:{jsonValue:Field<string>};
+        link?:{jsonValue:LinkField};
+        children?:{
+          results?:AccordionItemProps[];
         };
       };
     };
   };
 }
 
-export type AccordionItemProps = {
-  heading?: {
-    jsonValue?: Field<string>;
+export type AccordionItemProps={
+  heading?:{
+    jsonValue?:Field<string>;
   };
-  description?: {
-    jsonValue?: RichTextField;
+  description?:{
+    jsonValue?:RichTextField;
   };
 };
