@@ -32,3 +32,6 @@ export type AccordionItemProps = {
     jsonValue?: RichTextField;
   };
 };
+
+// Type error for testing workflow: Type 'string' is not assignable to type 'number'
+const typeCheckTestError: number = 'this will cause a type error';
