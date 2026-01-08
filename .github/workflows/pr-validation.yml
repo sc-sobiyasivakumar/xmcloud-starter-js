@@ -155,6 +155,12 @@ jobs:
                 # Create minimal import-map.ts
                 echo 'export default [];' > .sitecore/import-map.ts
                 
+                # Create minimal import-map.server.ts
+                echo 'export default [];' > .sitecore/import-map.server.ts
+                
+                # Create minimal import-map.client.ts
+                echo 'export default [];' > .sitecore/import-map.client.ts
+                
                 echo "✅ Minimal Sitecore files created for $starter"
               fi
               
