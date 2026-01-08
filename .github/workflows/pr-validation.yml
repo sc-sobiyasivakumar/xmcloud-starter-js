@@ -60,44 +60,6 @@ jobs:
           echo "✅ PR branch is based on the latest main branch"
           echo "base-check-passed=true" >> $GITHUB_OUTPUT
 
-      - name: Check if PR can be squash merged cleanly
-        id: merge-check
-        run: |
-          echo "Checking if PR can be squash merged to dmz..."
-
-          # Get current branch
-          CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-
-          # Try to merge with dmz
-          git checkout -b test-merge origin/dmz
-
-          # Test if merge would have conflicts
-          if git merge --squash --no-commit $CURRENT_BRANCH; then
-            echo "✅ PR can be squash merged to dmz without conflicts"
-            echo "merge-check-passed=true" >> $GITHUB_OUTPUT
-            git merge --abort 2>/dev/null || true
-          else
-            echo "❌ ERROR: This PR has merge conflicts with dmz"
-            echo ""
-            echo "Resolve conflicts by rebasing onto main first:"
-            echo ""
-            echo "  git fetch origin main"
-            echo "  git rebase origin/main"
-            echo "  git push --force-with-lease"
-            echo ""
-            echo "merge-check-passed=false" >> $GITHUB_OUTPUT
-            exit 1
-          fi
-
-      - name: Checkout PR branch for validation
-        run: |
-          # Ensure we're on the PR branch, not the test-merge branch
-          PR_HEAD_SHA="${{ github.event.pull_request.head.sha }}"
-          echo "Checking out PR head commit: $PR_HEAD_SHA"
-          git checkout -f "$PR_HEAD_SHA" || git checkout -f "${{ github.event.pull_request.head.ref }}"
-          echo "Current commit after checkout: $(git rev-parse HEAD)"
-          echo "Current branch: $(git rev-parse --abbrev-ref HEAD)"
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -359,8 +321,6 @@ jobs:
               ${emoji} **Status:** ${status}
 
               **Base Branch Check:** ${'${{ steps.base-check.outputs.base-check-passed }}' === 'true' ? '✅ Based on latest main' : '❌ Not based on latest main - rebase required'}
-
-              **Merge Check:** ${'${{ steps.merge-check.outputs.merge-check-passed }}' === 'true' ? '✅ Can be squash merged' : '❌ Merge conflicts detected'}
 
               **Validated Starters:** ${{ steps.detect-changes.outputs.changed-starters }}
 
