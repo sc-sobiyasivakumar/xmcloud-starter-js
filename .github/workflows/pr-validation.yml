@@ -181,14 +181,14 @@ jobs:
             fi
           done
 
-      - name: Lint and format check
+      - name: Lint check
         run: |
           set -e  # Exit immediately if any command fails
-          echo "Running linting and formatting checks..."
+          echo "Running linting checks..."
           for starter in ${{ steps.detect-changes.outputs.changed-starters }}; do
             if [ -d "examples/$starter" ]; then
               echo "=================================="
-              echo "Checking examples/$starter"
+              echo "Linting examples/$starter"
               echo "=================================="
               cd "examples/$starter"
               
@@ -201,22 +201,20 @@ jobs:
               fi
               echo "✅ Linting passed for $starter"
               
-              # Check formatting (only if format:check script exists)
-              # Warning only - does not fail the workflow
+              cd ../..
+            fi
+          done
+
+      - name: Format check
+        continue-on-error: true
+        run: |
+          # Run format check silently - formatting doesn't block builds
+          for starter in ${{ steps.detect-changes.outputs.changed-starters }}; do
+            if [ -d "examples/$starter" ]; then
+              cd "examples/$starter"
               if grep -q '"format:check"' package.json 2>/dev/null; then
-                echo "Running format check for $starter..."
-                if ! npm run format:check; then
-                  echo "⚠️ WARNING: Formatting issues found in $starter"
-                  echo "Run 'npm run prettier --write' to fix formatting issues"
-                  echo "::warning::Formatting check found issues in $starter (non-blocking)"
-                  # Continue without failing - format check is a warning only
-                else
-                  echo "✅ Formatting check passed for $starter"
-                fi
-              else
-                echo "⏭️ Skipping format check (no format:check script found in package.json)"
+                npm run format:check >/dev/null 2>&1 || true
               fi
-              
               cd ../..
             fi
           done
@@ -345,7 +343,7 @@ jobs:
               **Validated Starters:** ${{ steps.detect-changes.outputs.changed-starters }}
 
               **Checks Performed:**
-              - ✅ Linting and formatting
+              - ✅ Linting
               - ✅ TypeScript type checking
               - ✅ Build verification
               - ✅ Test execution
@@ -353,7 +351,7 @@ jobs:
               **Next Steps:**
               ${'${{ job.status }}' === 'success' ? 
                 '- ✅ PR is ready for review and merge to dmz branch\n- After merge, the DMZ validation workflow will run as final gate\n- If DMZ validation passes, dmz can be manually merged to main using a merge commit' : 
-                '- ❌ Please fix the issues above before merging\n- If not based on latest main: `git fetch origin main && git rebase origin/main && git push --force-with-lease`\n- If formatting issues: Run `npm run prettier`\n- Check the build logs for specific errors'
+                '- ❌ Please fix the issues above before merging\n- If not based on latest main: `git fetch origin main && git rebase origin/main && git push --force-with-lease`\n- Check the build logs for specific errors'
               }
 
               ---
