@@ -32,3 +32,6 @@ export type AccordionItemProps = {
     jsonValue: RichTextField;
   };
 };
+
+// Unused variable for testing workflow
+const unusedTestVariable: any = 'test';
