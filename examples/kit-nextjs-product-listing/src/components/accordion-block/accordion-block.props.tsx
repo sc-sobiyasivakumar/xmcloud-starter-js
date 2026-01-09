@@ -32,3 +32,5 @@ export type AccordionItemProps = {
     jsonValue: RichTextField;
   };
 };
+
+const unusedTestVariable: any = 'test';
