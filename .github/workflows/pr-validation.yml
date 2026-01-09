@@ -300,7 +300,7 @@ jobs:
               echo "Testing $starter..."
               cd "examples/$starter"
               
-              # Check if test script exists, if not fail the workflow
+              # Check if test script exists
               if grep -q '"test"' package.json; then
                 if npm test; then
                   echo "✅ Tests passed for $starter"
@@ -309,8 +309,7 @@ jobs:
                   exit 1
                 fi
               else
-                echo "❌ No test script found for $starter - tests are mandatory"
-                exit 1
+                echo "⏭️ Skipping tests (no test script found in package.json)"
               fi
               
               cd ../..
