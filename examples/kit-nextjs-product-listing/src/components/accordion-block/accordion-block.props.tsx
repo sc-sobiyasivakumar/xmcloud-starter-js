@@ -25,8 +25,8 @@ export interface AccordionFields {
 }
 
 export type AccordionItemProps = {
-  heading: {
-    jsonValue: Field<string>;
+  heading:{
+    jsonValue:Field<string>;
   };
   description: {
     jsonValue: RichTextField;
