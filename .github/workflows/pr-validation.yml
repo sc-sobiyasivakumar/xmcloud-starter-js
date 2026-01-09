@@ -202,18 +202,19 @@ jobs:
               echo "✅ Linting passed for $starter"
               
               # Check formatting (only if format:check script exists)
-              # TEMPORARILY SKIPPED FOR TESTING - even if script exists
-              if false && grep -q '"format:check"' package.json 2>/dev/null; then
+              # Warning only - does not fail the workflow
+              if grep -q '"format:check"' package.json 2>/dev/null; then
                 echo "Running format check for $starter..."
                 if ! npm run format:check; then
-                  echo "❌ Formatting check failed for $starter"
-                  echo "Run 'npm run prettier' to fix formatting issues"
-                  echo "::error::Formatting check failed for $starter"
-                  exit 1
+                  echo "⚠️ WARNING: Formatting issues found in $starter"
+                  echo "Run 'npm run prettier --write' to fix formatting issues"
+                  echo "::warning::Formatting check found issues in $starter (non-blocking)"
+                  # Continue without failing - format check is a warning only
+                else
+                  echo "✅ Formatting check passed for $starter"
                 fi
-                echo "✅ Formatting check passed for $starter"
               else
-                echo "⏭️ Skipping format check (temporarily disabled for testing)"
+                echo "⏭️ Skipping format check (no format:check script found in package.json)"
               fi
               
               cd ../..
