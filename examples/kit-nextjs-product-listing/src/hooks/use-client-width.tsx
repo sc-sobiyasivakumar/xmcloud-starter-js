@@ -1,11 +1,9 @@
 'use client';
 
-import { useEffect, useState, type RefObject } from 'react';
+import { useEffect, useState, useCallback, type RefObject } from 'react';
 
 type WidthTransformFn = (width: number) => number;
 
-// Unused variable for testing workflow
-const unusedTestVariable: any = 'test';
 
 /**
  * Hook that returns the client width of an element using a ref.
