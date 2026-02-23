@@ -95,20 +95,16 @@ export function buildArticleJsonLd(input: {
 
 export function buildProductJsonLd(input: {
   name?: string;
-  /** When name is from rich text (e.g. PromoText), pass HTML here to get plain-text name */
-  nameHtml?: string;
   descriptionHtml?: string;
   image?: string | string[];
   url?: string;
 }): ProductJsonLd {
   const description = input.descriptionHtml ? stripHtml(input.descriptionHtml) : undefined;
-  const name =
-    input.name ?? (input.nameHtml ? stripHtml(input.nameHtml) : undefined);
 
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name,
+    name: input.name,
     description,
     image: input.image,
     url: input.url,
@@ -162,4 +158,3 @@ export function buildFaqPageJsonLd(input: {
     })),
   };
 }
-
