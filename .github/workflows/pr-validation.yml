@@ -248,6 +248,8 @@ jobs:
           done
 
       - name: Build changed starters
+        id: build-starters
+        continue-on-error: true
         env:
           # Sitecore Edge API Configuration
           SITECORE_EDGE_URL: ${{ secrets.SITECORE_EDGE_URL }}
@@ -291,6 +293,8 @@ jobs:
           done
 
       - name: Run tests for changed starters
+        id: run-tests
+        continue-on-error: true
         run: |
           echo "Running tests for changed starters..."
 
@@ -316,6 +320,8 @@ jobs:
           done
       
       - name: Run GEO endpoint tests (with server)
+        id: run-geo-tests
+        continue-on-error: true
         env:
           SITECORE_EDGE_URL: ${{ secrets.SITECORE_EDGE_URL }}
           SITECORE_EDGE_CONTEXT_ID: ${{ secrets.SITECORE_EDGE_CONTEXT_ID }}
@@ -435,3 +441,12 @@ jobs:
                 throw error;
               }
             }
+
+      - name: Fail job if build or tests failed
+        if: always() && (steps.build-starters.outcome == 'failure' || steps.run-tests.outcome == 'failure' || steps.run-geo-tests.outcome == 'failure')
+        run: |
+          echo "::error::One or more steps failed (build, unit tests, or GEO tests)."
+          [ "${{ steps.build-starters.outcome }}" = 'failure' ] && echo "::error::Build changed starters failed."
+          [ "${{ steps.run-tests.outcome }}" = 'failure' ] && echo "::error::Run tests for changed starters failed."
+          [ "${{ steps.run-geo-tests.outcome }}" = 'failure' ] && echo "::error::Run GEO endpoint tests failed."
+          exit 1
