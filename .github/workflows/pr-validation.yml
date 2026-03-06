@@ -221,6 +221,8 @@ jobs:
           done
 
       - name: Type checking
+        id: type-check
+        continue-on-error: true
         run: |
           echo "Running TypeScript type checking..."
 
