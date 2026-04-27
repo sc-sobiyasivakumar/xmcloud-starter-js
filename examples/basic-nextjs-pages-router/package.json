@@ -35,7 +35,7 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "sass": "^1.87.0",
-    "sharp": "0.34.1"
+    "sharp": "0.34.5"
   },
   "devDependencies": {
     "@sitecore-content-sdk/cli": "^2.0.0",
