@@ -151,7 +151,7 @@
     "move-cli": "^2.0.0",
     "npm-run-all2": "^7.0.1",
     "ts-node": "~10.9.2",
-    "typescript": "~5.8.0",
+    "typescript": "~6.0.3",
     "webpack": "^5.104.1"
   }
 }
