@@ -125,7 +125,7 @@
     "@sitecore-jss/sitecore-jss-cli": "~22.10.0",
     "@sitecore-jss/sitecore-jss-dev-tools": "~22.10.0",
     "@types/jasmine": "~3.6.7",
-    "@types/node": "~22.13.0",
+    "@types/node": "~25.6.0",
     "@typescript-eslint/eslint-plugin": "^8.14.0",
     "@typescript-eslint/parser": "^8.14.0",
     "chalk": "~4.1.0",
