@@ -62,7 +62,7 @@
     "@sitecore-content-sdk/personalize": "^2.0.0",
     "@sitecore-content-sdk/events": " ^2.0.0",
     "@sitecore-content-sdk/nextjs": "^2.0.0",
-    "@tailwindcss/cli": "^4.1.11",
+    "@tailwindcss/cli": "^4.2.4",
     "@types/google-libphonenumber": "^7.4.30",
     "@types/ramda": "^0.30.2",
     "@vercel/speed-insights": "^1.2.0",
