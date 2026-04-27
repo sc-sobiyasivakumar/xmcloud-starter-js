@@ -92,7 +92,7 @@
     "@angular/platform-server": "~20.3.19",
     "@angular/router": "~20.3.18",
     "@apollo/client": "^3.12.9",
-    "@ngx-translate/core": "~15.0.0",
+    "@ngx-translate/core": "~17.0.0",
     "@ngx-translate/http-loader": "~8.0.0",
     "@sitecore-cloudsdk/core": "^0.5.1",
     "@sitecore-cloudsdk/events": "^0.5.1",
