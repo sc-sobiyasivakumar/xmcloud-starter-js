@@ -65,7 +65,7 @@
     "@sitecore-content-sdk/personalize": "^2.0.0",
     "@sitecore-feaas/clientside": "^0.6.0",
     "@sitecore/components": "~2.1.0",
-    "@tailwindcss/cli": "^4.1.11",
+    "@tailwindcss/cli": "^4.2.4",
     "@types/google-libphonenumber": "^7.4.30",
     "@types/ramda": "^0.30.2",
     "@vercel/speed-insights": "^1.2.0",
