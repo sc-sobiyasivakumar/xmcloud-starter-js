@@ -127,7 +127,7 @@
     "@types/jasmine": "~3.6.7",
     "@types/node": "~22.13.0",
     "@typescript-eslint/eslint-plugin": "^8.14.0",
-    "@typescript-eslint/parser": "^8.14.0",
+    "@typescript-eslint/parser": "^8.59.1",
     "chalk": "~4.1.0",
     "chokidar": "^3.5.2",
     "constant-case": "^3.0.4",
