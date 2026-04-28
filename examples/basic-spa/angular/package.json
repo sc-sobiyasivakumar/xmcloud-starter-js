@@ -120,7 +120,7 @@
     "@angular-eslint/template-parser": "^20.5.1",
     "@angular/cli": "~20.3.18",
     "@angular/compiler-cli": "~20.3.18",
-    "@angular/language-service": "~20.3.18",
+    "@angular/language-service": "~21.2.10",
     "@sitecore-jss/sitecore-jss-angular-schematics": "~22.10.0",
     "@sitecore-jss/sitecore-jss-cli": "~22.10.0",
     "@sitecore-jss/sitecore-jss-dev-tools": "~22.10.0",
