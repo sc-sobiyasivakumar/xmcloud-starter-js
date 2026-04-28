@@ -111,7 +111,7 @@ importers:
     devDependencies:
       '@angular-builders/custom-webpack':
         specifier: ^20.0.0
-        version: 20.0.0(lusvvvmxacntgjjhf7nrbykmge)
+        version: 20.0.0(lqt5avpexrl5hicatgogjucpwy)
       '@angular-devkit/build-angular':
         specifier: ~20.3.18
         version: 20.3.24(kw5z2t3bghdm3iwve5pcrupcfy)
@@ -170,8 +170,8 @@ importers:
         specifier: ^3.5.2
         version: 3.6.0
       constant-case:
-        specifier: ^3.0.4
-        version: 3.0.4
+        specifier: ^4.0.0
+        version: 4.0.0
       cross-env:
         specifier: ~7.0.3
         version: 7.0.3
@@ -3113,8 +3113,9 @@ packages:
     resolution: {integrity: sha512-ZqRXc+tZukToSNmh5C2iWMSoV3X1YUcPbqEM4DkEG5tNQXrQUZCNVGGv3IuicnkMtPfGf3Xtp8WCXs295iQ1pQ==}
     engines: {node: '>= 0.10.0'}
 
-  constant-case@3.0.4:
-    resolution: {integrity: sha512-I2hSBi7Vvs7BEuJDr5dDHfzb/Ruj3FyvFyh7KLilAjNQw3Be+xgqUBA2W6scVEcL0hL1dwPRtIqEPVUCKkSsyQ==}
+  constant-case@4.0.0:
+    resolution: {integrity: sha512-fAlGXwPwE6TpIrVOGu8Cmoa9QZg3m42GOOj7sKXROp7Es+bBCZdxRoDWjna5GwoqWt+tZ8m1w1EBeiB3rwD0eg==}
+    deprecated: Use `change-case`
 
   content-disposition@0.5.4:
     resolution: {integrity: sha512-FveZTNuGw04cxlAiWbzi6zTAL/lhehaWbTtgluJh4/E95DqMwTmha3KZN1aAWA8cFIhHzMZUvLevkw5Rqk+tSQ==}
@@ -4588,9 +4589,6 @@ packages:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
     hasBin: true
 
-  lower-case@2.0.2:
-    resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==}
-
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
 
@@ -4851,8 +4849,9 @@ packages:
   neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
 
-  no-case@3.0.4:
-    resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==}
+  no-case@4.0.0:
+    resolution: {integrity: sha512-WmS3EUGw+vXHlTgiUPi3NzbZNwH6+uGX0QLGgqG+aFSJ5rkX/Ee0nuwHBJfZTfQwwR8lGO819NEIwQ7CGhkdEQ==}
+    deprecated: Use `change-case`
 
   node-addon-api@6.1.0:
     resolution: {integrity: sha512-+eawOlIgy680F0kBzPUNFhMZGtJ1YmqM6l4+Crf4IkImjYrO/mqPwRMh352g23uIaQKFItcQ64I7KMaJxHgAVA==}
@@ -6061,9 +6060,6 @@ packages:
     peerDependencies:
       browserslist: '>= 4.21.0'
 
-  upper-case@2.0.2:
-    resolution: {integrity: sha512-KgdgDGJt2TpuwBUIjgG6lzw2GWFRCW9Qkfkiv0DxqHHLYJHmtmdUIKcZd8rHgFSjopVTlw6ggzCm1b8MFQwikg==}
-
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
@@ -6501,13 +6497,13 @@ snapshots:
       - chokidar
       - typescript
 
-  '@angular-builders/custom-webpack@20.0.0(lusvvvmxacntgjjhf7nrbykmge)':
+  '@angular-builders/custom-webpack@20.0.0(lqt5avpexrl5hicatgogjucpwy)':
     dependencies:
       '@angular-builders/common': 4.0.0(@types/node@22.13.17)(chokidar@3.6.0)(typescript@5.8.3)
       '@angular-devkit/architect': 0.2003.24(chokidar@3.6.0)
       '@angular-devkit/build-angular': 20.3.24(kw5z2t3bghdm3iwve5pcrupcfy)
       '@angular-devkit/core': 20.3.24(chokidar@3.6.0)
-      '@angular/build': 20.3.24(lusvvvmxacntgjjhf7nrbykmge)
+      '@angular/build': 20.3.24(lqt5avpexrl5hicatgogjucpwy)
       '@angular/compiler-cli': 20.3.19(@angular/compiler@20.3.18)(typescript@5.8.3)
       lodash: 4.18.1
       webpack-merge: 6.0.1
@@ -6746,6 +6742,59 @@ snapshots:
       '@angular/core': 20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1)
       tslib: 2.8.1
 
+  '@angular/build@20.3.24(lqt5avpexrl5hicatgogjucpwy)':
+    dependencies:
+      '@ampproject/remapping': 2.3.0
+      '@angular-devkit/architect': 0.2003.24(chokidar@3.6.0)
+      '@angular/compiler': 20.3.18
+      '@angular/compiler-cli': 20.3.19(@angular/compiler@20.3.18)(typescript@5.8.3)
+      '@babel/core': 7.28.3
+      '@babel/helper-annotate-as-pure': 7.27.3
+      '@babel/helper-split-export-declaration': 7.24.7
+      '@inquirer/confirm': 5.1.14(@types/node@22.13.17)
+      '@vitejs/plugin-basic-ssl': 2.1.0(vite@7.3.2(@types/node@22.13.17)(jiti@1.21.7)(less@4.4.0)(sass@1.90.0)(terser@5.46.1))
+      beasties: 0.3.5
+      browserslist: 4.28.2
+      esbuild: 0.28.0
+      https-proxy-agent: 7.0.6
+      istanbul-lib-instrument: 6.0.3
+      jsonc-parser: 3.3.1
+      listr2: 9.0.1
+      magic-string: 0.30.17
+      mrmime: 2.0.1
+      parse5-html-rewriting-stream: 8.0.0
+      picomatch: 4.0.4
+      piscina: 5.1.3
+      rollup: 4.59.0
+      sass: 1.90.0
+      semver: 7.7.2
+      source-map-support: 0.5.21
+      tinyglobby: 0.2.14
+      tslib: 2.8.1
+      typescript: 5.8.3
+      vite: 7.3.2(@types/node@22.13.17)(jiti@1.21.7)(less@4.4.0)(sass@1.99.0)(terser@5.46.1)
+      watchpack: 2.4.4
+    optionalDependencies:
+      '@angular/core': 20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1)
+      '@angular/platform-browser': 20.3.19(@angular/animations@20.3.19(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1)))(@angular/common@20.3.19(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1))
+      '@angular/platform-server': 20.3.19(@angular/common@20.3.19(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/compiler@20.3.18)(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@20.3.19(@angular/animations@20.3.19(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1)))(@angular/common@20.3.19(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1)))(rxjs@7.8.2)
+      karma: 6.4.4
+      less: 4.4.0
+      lmdb: 3.4.2
+      postcss: 8.5.6
+    transitivePeerDependencies:
+      - '@types/node'
+      - chokidar
+      - jiti
+      - lightningcss
+      - sass-embedded
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - tsx
+      - yaml
+
   '@angular/build@20.3.24(lusvvvmxacntgjjhf7nrbykmge)':
     dependencies:
       '@ampproject/remapping': 2.3.0
@@ -6756,7 +6805,7 @@ snapshots:
       '@babel/helper-annotate-as-pure': 7.27.3
       '@babel/helper-split-export-declaration': 7.24.7
       '@inquirer/confirm': 5.1.14(@types/node@22.13.17)
-      '@vitejs/plugin-basic-ssl': 2.1.0(vite@7.3.2(@types/node@22.13.17)(jiti@1.21.7)(less@4.4.0)(sass@1.99.0)(terser@5.43.1))
+      '@vitejs/plugin-basic-ssl': 2.1.0(vite@7.3.2(@types/node@22.13.17)(jiti@1.21.7)(less@4.4.0)(sass@1.90.0)(terser@5.46.1))
       beasties: 0.3.5
       browserslist: 4.28.2
       esbuild: 0.28.0
@@ -8924,9 +8973,9 @@ snapshots:
       '@typescript-eslint/types': 8.59.0
       eslint-visitor-keys: 5.0.1
 
-  '@vitejs/plugin-basic-ssl@2.1.0(vite@7.3.2(@types/node@22.13.17)(jiti@1.21.7)(less@4.4.0)(sass@1.99.0)(terser@5.43.1))':
+  '@vitejs/plugin-basic-ssl@2.1.0(vite@7.3.2(@types/node@22.13.17)(jiti@1.21.7)(less@4.4.0)(sass@1.90.0)(terser@5.46.1))':
     dependencies:
-      vite: 7.3.2(@types/node@22.13.17)(jiti@1.21.7)(less@4.4.0)(sass@1.99.0)(terser@5.43.1)
+      vite: 7.3.2(@types/node@22.13.17)(jiti@1.21.7)(less@4.4.0)(sass@1.99.0)(terser@5.46.1)
 
   '@webassemblyjs/ast@1.14.1':
     dependencies:
@@ -9532,11 +9581,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  constant-case@3.0.4:
+  constant-case@4.0.0:
     dependencies:
-      no-case: 3.0.4
-      tslib: 2.8.1
-      upper-case: 2.0.2
+      no-case: 4.0.0
 
   content-disposition@0.5.4:
     dependencies:
@@ -11235,10 +11282,6 @@ snapshots:
     dependencies:
       js-tokens: 4.0.0
 
-  lower-case@2.0.2:
-    dependencies:
-      tslib: 2.8.1
-
   lru-cache@10.4.3: {}
 
   lru-cache@11.3.5: {}
@@ -11507,10 +11550,7 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  no-case@3.0.4:
-    dependencies:
-      lower-case: 2.0.2
-      tslib: 2.8.1
+  no-case@4.0.0: {}
 
   node-addon-api@6.1.0:
     optional: true
@@ -12898,10 +12938,6 @@ snapshots:
       escalade: 3.2.0
       picocolors: 1.1.1
 
-  upper-case@2.0.2:
-    dependencies:
-      tslib: 2.8.1
-
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
@@ -12948,7 +12984,7 @@ snapshots:
       sass: 1.90.0
       terser: 5.43.1
 
-  vite@7.3.2(@types/node@22.13.17)(jiti@1.21.7)(less@4.4.0)(sass@1.99.0)(terser@5.43.1):
+  vite@7.3.2(@types/node@22.13.17)(jiti@1.21.7)(less@4.4.0)(sass@1.99.0)(terser@5.46.1):
     dependencies:
       esbuild: 0.27.7
       fdir: 6.5.0(picomatch@4.0.4)
@@ -12962,7 +12998,7 @@ snapshots:
       jiti: 1.21.7
       less: 4.4.0
       sass: 1.99.0
-      terser: 5.43.1
+      terser: 5.46.1
 
   void-elements@2.0.1: {}
 
