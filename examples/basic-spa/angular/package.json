@@ -96,7 +96,7 @@
     "@ngx-translate/http-loader": "~8.0.0",
     "@sitecore-cloudsdk/core": "^0.5.1",
     "@sitecore-cloudsdk/events": "^0.5.1",
-    "@sitecore-jss/sitecore-jss-angular": "~22.10.0",
+    "@sitecore-jss/sitecore-jss-angular": "~22.12.1",
     "apollo-angular": "^11.0.0",
     "bootstrap": "^5.3.3",
     "core-js": "~3.37.1",
