@@ -3,6 +3,7 @@ name: PR Validation for DMZ Branch
 on:
   pull_request:
     branches: [dmz]
+    types: [opened, reopened, synchronize, edited]
 
 env:
   NODE_VERSION: "22.11.0"
