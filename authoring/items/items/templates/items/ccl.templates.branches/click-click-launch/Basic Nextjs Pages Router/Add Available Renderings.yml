@@ -1,0 +1,31 @@
+---
+ID: "fa5e871d-8ab6-4d10-9690-f95ebaf19be0"
+Parent: "e7311373-3dec-4a84-9c3b-00a905d94f9c"
+Template: "35e75c72-4985-4e09-88c3-0eac6cd1e64f"
+Path: "/sitecore/templates/Branches/Project/click-click-launch/Basic Nextjs Pages Router/Add Available Renderings"
+SharedFields:
+- ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
+  Hint: __Shared revision
+  Value: "4baee51f-676d-41d9-9919-4def40db1bc7"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20250611T120000Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "b2c3d4e5-f6a7-4890-b123-cdef01234567"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\Admin
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20250611T120000Z

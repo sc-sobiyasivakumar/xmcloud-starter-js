@@ -1,21 +1,21 @@
 ---
-ID: "b9e3d1c2-5c4f-4b8e-ad93-2d3e4f5a6b7c"
-Parent: "b840e1ed-f08b-4a54-a281-a3184770bae7"
+ID: "fd9ef957-ecef-4962-805e-96deee921fbd"
+Parent: "fa6c1e4c-480e-4b8e-805c-75795d0f072c"
 Template: "3aea335c-d06d-45b1-841a-cbc8d2d1ce40"
-Path: "/sitecore/system/Settings/Project/click-click-launch/Alaris Setup/Data Folders/Add Search Experiences Data Folder"
+Path: "/sitecore/system/Settings/Project/click-click-launch/Basic Nextjs Pages Router Setup/Add Available Renderings"
 SharedFields:
 - ID: "52c91c75-6698-4701-a8a2-242ace59a8d6"
   Hint: Location
-  Value: "{BA2F959D-A614-4C92-8B57-F1FC1A323ABE}"
+  Value: "{3F14C1B6-5A2D-44CA-A8EF-DFE3CBD574E4}"
 - ID: "7868e6bc-525c-4fce-ab8a-77da3e09b171"
   Hint: Name
-  Value: Search Experiences
+  Value: "click-click-launch"
 - ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
   Hint: __Shared revision
-  Value: "00000000-0000-0000-0000-000000000003"
+  Value: "78ddbf28-b9e8-4f15-a777-992d15b33487"
 - ID: "e62c28f0-9d3b-46e2-8bec-a5e120542499"
   Hint: Template
-  Value: "{DDEC7923-74B5-4C0C-86A6-04F551123581}"
+  Value: "{FA5E871D-8AB6-4D10-9690-F95EBAF19BE0}"
 Languages:
 - Language: en
   Versions:
@@ -23,22 +23,22 @@ Languages:
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20260511T120000Z
+      Value: 20250611T120000Z
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |
-        sitecore\admin
+        sitecore\Admin
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
       Value: |
-        sitecore\admin
+        sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "d2e3f4a5-b6c7-4890-9123-456789abcdef"
+      Value: "e5f6a7b8-c9d0-4123-e456-f01234567890"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\admin
+        sitecore\Admin
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20260511T120000Z
+      Value: 20250611T120000Z
