@@ -1,7 +1,7 @@
 'use client';
 import { useCallback, useEffect, useState } from 'react';
 import { useI18n } from 'next-localization';
-import { useSearchParams } from 'next/navigation';
+import { useRouter as usePagesRouter } from 'next/router';
 import { useSitecore } from '@sitecore-content-sdk/nextjs';
 import { useSearch } from '@sitecore-content-sdk/nextjs/search';
 import { cn } from '../../lib/utils';
@@ -17,6 +17,7 @@ import { useSearchField } from './search-components/useSearchField';
 import { useParams } from './search-components/useParams';
 import { DICTIONARY_KEYS, gridColsClass } from './search-components/constants';
 import { useRouter } from './search-components/useRouter';
+import { getSearchQ } from './search-components/get-search-q';
 
 export const Default = (props: SearchExperienceProps) => {
   const { page } = useSitecore();
@@ -26,11 +27,11 @@ export const Default = (props: SearchExperienceProps) => {
   const { searchIndex, fieldsMapping } = useSearchField(props.fields.search.value);
 
   const { styles, id, pageSize, columns } = useParams(params);
-  const searchParams = useSearchParams();
+  const pagesRouter = usePagesRouter();
 
   const { isEditing, isPreview } = page.mode;
   const [pageNumber, setPageNumber] = useState(1);
-  const [inputValue, setInputValue] = useState<string>((searchParams.get('q') as string) || '');
+  const [inputValue, setInputValue] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [searchEnabled, setSearchEnabled] = useState<boolean>(false);
 
@@ -54,14 +55,14 @@ export const Default = (props: SearchExperienceProps) => {
   }, [isSuccess, sendEvent]);
 
   useEffect(() => {
-    const routerQuery = (searchParams.get('q') as string) || '';
-
+    if (!pagesRouter.isReady) return;
+    const routerQuery = getSearchQ(pagesRouter.query);
+    setInputValue(routerQuery);
     setSearchQuery(routerQuery);
-
     if (!routerQuery) {
       setPageNumber(1);
     }
-  }, [searchParams]);
+  }, [pagesRouter.isReady, pagesRouter.asPath]);
 
   useEffect(() => {
     if (isEditing || isPreview) return;

@@ -1,21 +1,24 @@
 'use client';
 import { useCallback } from 'react';
-import { useRouter as useNextRouter, usePathname } from 'next/navigation';
+import { useRouter as usePagesRouter } from 'next/router';
 import { useDebouncedCallback } from './useDebounce';
 
 export const useRouter = () => {
-  const router = useNextRouter();
-  const pathname = usePathname();
+  const router = usePagesRouter();
+
   const setRouterQuery = useCallback(
     (value: string) => {
-      // Construct the URL with current pathname to avoid exposing rewrites
-      const currentPath = pathname.split('?')[0];
-      const queryString = value ? `?q=${value}` : '';
-      const asPath = currentPath + queryString;
-
-      router.replace(asPath);
+      const nextQuery = { ...router.query };
+      if (value) {
+        nextQuery.q = value;
+      } else {
+        delete nextQuery.q;
+      }
+      void router.replace({ pathname: router.pathname, query: nextQuery }, undefined, {
+        shallow: true,
+      });
     },
-    [router, pathname]
+    [router]
   );
 
   const debouncedSetRouterQuery = useDebouncedCallback(setRouterQuery);

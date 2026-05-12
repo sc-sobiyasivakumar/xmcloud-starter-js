@@ -10,7 +10,7 @@ import {
 import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
 import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
 import { useI18n } from 'next-localization';
-import { useSearchParams, useRouter as useRouter_38d453563358e259e30871f8ef5a0334c186c57e, usePathname } from 'next/navigation';
+import { useRouter } from 'next/router';
 import { useSitecore, Text, Link, Placeholder, CdpHelper } from '@sitecore-content-sdk/nextjs';
 import { useSearch } from '@sitecore-content-sdk/nextjs/search';
 import { cn } from 'src/lib/utils';
@@ -24,7 +24,8 @@ import { useEvent } from 'src/components/search-experience/search-components/use
 import { useSearchField } from 'src/components/search-experience/search-components/useSearchField';
 import { useParams } from 'src/components/search-experience/search-components/useParams';
 import { DICTIONARY_KEYS, gridColsClass, DEFAULT_PAGE_SIZE, DEBOUNCE_TIME } from 'src/components/search-experience/search-components/constants';
-import { useRouter } from 'src/components/search-experience/search-components/useRouter';
+import { useRouter as useRouter_718da64eaca4c1615fa5f1603d6d6260be2e7c90 } from 'src/components/search-experience/search-components/useRouter';
+import { getSearchQ } from 'src/components/search-experience/search-components/get-search-q';
 import { useDebouncedCallback } from 'src/components/search-experience/search-components/useDebounce';
 import { event, pageView } from '@sitecore-content-sdk/events';
 import { cn as cn_b4c06b3218abd6b3fb46a1f6d67407cec902c758 } from 'lib/utils';
@@ -68,11 +69,9 @@ const importMap = [
     ]
   },
   {
-    module: 'next/navigation',
+    module: 'next/router',
     exports: [
-      { name: 'useSearchParams', value: useSearchParams },
-      { name: 'useRouter', value: useRouter_38d453563358e259e30871f8ef5a0334c186c57e },
-      { name: 'usePathname', value: usePathname },
+      { name: 'useRouter', value: useRouter },
     ]
   },
   {
@@ -163,7 +162,13 @@ const importMap = [
   {
     module: 'src/components/search-experience/search-components/useRouter',
     exports: [
-      { name: 'useRouter', value: useRouter },
+      { name: 'useRouter', value: useRouter_718da64eaca4c1615fa5f1603d6d6260be2e7c90 },
+    ]
+  },
+  {
+    module: 'src/components/search-experience/search-components/get-search-q',
+    exports: [
+      { name: 'getSearchQ', value: getSearchQ },
     ]
   },
   {
