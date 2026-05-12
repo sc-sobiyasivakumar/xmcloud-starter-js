@@ -1,21 +1,21 @@
 ---
-ID: "854135fc-18b8-4a74-b9fb-5a62af02e758"
-Parent: "30481455-20c2-403a-ac68-1d7a8c911017"
+ID: "5a45a3e0-9cc3-4095-bbe2-f5e9808db9a6"
+Parent: "716e535b-0856-43ec-a9d4-9925f087d5fe"
 Template: "3aea335c-d06d-45b1-841a-cbc8d2d1ce40"
-Path: "/sitecore/system/Settings/Project/click-click-launch/Basic Nextjs Pages Router Setup/Rendering Variants/Search Experience Variants"
+Path: "/sitecore/system/Settings/Project/click-click-launch/Basic Nextjs Pages Router Setup/Data Folders/Add Search Experiences Data Folder"
 SharedFields:
 - ID: "52c91c75-6698-4701-a8a2-242ace59a8d6"
   Hint: Location
-  Value: "{C6F65339-F4DA-40FA-88D1-E1ECFFD54B91}"
+  Value: "{BA2F959D-A614-4C92-8B57-F1FC1A323ABE}"
 - ID: "7868e6bc-525c-4fce-ab8a-77da3e09b171"
   Hint: Name
-  Value: Search Experience
+  Value: Search Experiences
 - ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
   Hint: __Shared revision
-  Value: "90774c01-20ad-444b-b0a0-f89ea602bd0b"
+  Value: "3b1a6034-8da6-4625-8527-bde412bd4079"
 - ID: "e62c28f0-9d3b-46e2-8bec-a5e120542499"
   Hint: Template
-  Value: "{11C02373-DB27-4DC2-A15D-244844150E55}"
+  Value: "{DDEC7923-74B5-4C0C-86A6-04F551123581}"
 Languages:
 - Language: en
   Versions:
@@ -34,7 +34,7 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "4e38b0c9-160a-4045-b9a1-2685a4f5817b"
+      Value: "25256d26-9a82-4da6-840e-831f5d7282e0"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
