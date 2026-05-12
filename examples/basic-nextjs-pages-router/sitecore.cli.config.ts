@@ -21,7 +21,10 @@ export default defineCliConfig({
   },
   componentMap: {
     paths: ['src/components'],
-    // Exclude content-sdk auxillary components
-    exclude: ['src/components/content-sdk/*'],
+    // Exclude content-sdk auxillary components and Search Experience internals (not layout components)
+    exclude: [
+      'src/components/content-sdk/*',
+      'src/components/search-experience/search-components/**/*',
+    ],
   },
 });
